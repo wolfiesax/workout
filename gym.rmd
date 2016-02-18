@@ -1,0 +1,304 @@
+---
+title: Workout statistics
+date: 2016-02-17
+toc: true
+author: Ulf Saxin
+subtitle: Subtitle
+doctype: INFORMATION
+infotype: Ericsson Internal
+docprep: EULFPET Ulf Saxin
+docresp: EULFPET Ulf Saxin
+docno: TBD Uen
+docchk: EULFPET
+docrev: PA3
+---
+
+```{r setup, echo=FALSE, message=FALSE, results="hide"}
+require(markdown)
+require(knitr)
+require(kfigr)
+opts_chunk$set(message=FALSE, warning=FALSE)
+Sys.setlocale("LC_TIME", "C") # Enable English language for table contents
+```
+
+# Statistics
+
+Contemplate series $x_k$ containing number of pushups per day index $k$. 
+Then the total number of pushups $\Sigma$, mean $\mu$ and standard deviation 
+$\sigma$ are given by
+
+$$\Sigma = \sum^{N}_{k=1}x_{k}=x_1+x_2+\ldots+x_N$$ {#eq:sum}
+$$\mu = \frac{1}{N}\sum^{N}_{k=1}x_{k}$$ {#eq:mean}
+$$\sigma^{2} = \frac{1}{N}\sum^{N}_{k=1}(x_{k}-\mu)^{2}$$ {#eq:std}
+
+Pushup exercises started on October 1^st^ 2015 and will continue throughout 
+2016. Results so far are illustrated in 
+Figure `r figr("eulfpet",type="Figure")`.
+
+```{r eulfpet, dev="pdf",anchor="Figure",fig.width=5.8, fig.height=5, echo=FALSE, results="hide"}
+# Clear workspace
+rm(list = ls())
+dat = matrix(c(
+20151001,  40,
+20151002,  40,
+20151003,   0,
+20151004,  40,
+20151005,  60,
+20151006,  55,
+20151007,  60,
+20151008,  65,
+20151009,  60,
+20151010,  60,
+20151011,  60,
+20151012,  40,
+20151013,  55,
+20151014,  80,
+20151015,  45,
+20151016,  60,
+20151017,  40,
+20151018,  40,
+20151019,  70,
+20151020, 105,
+20151021,  80,
+20151022,  85,
+20151023,  73,
+20151024,  25,
+20151025,   0,
+20151026,  50,
+20151027,  50,
+20151028,  25,
+20151029,  25,
+20151030,  25,
+20151031,  25,
+20151101,  25,
+20151102,  25,
+20151103,  25,
+20151104,  25,
+20151105,  25,
+20151106,  25,
+20151107,  25,
+20151108,  50,
+20151109,  50,
+20151110,  25,
+20151111,  25,
+20151112,  50,
+20151113,  50,
+20151114,  50,
+20151115,  50,
+20151116,  50,
+20151117,  50,
+20151118,  50,
+20151119,  50,
+20151120,  50,
+20151121,  50,
+20151122,  50,
+20151123,  50,
+20151124,   0,
+20151125,  25,
+20151126,   0,
+20151127,  25,
+20151128,  25,
+20151129,  25,
+20151130,  50,
+20151201,  55,
+20151202,  60,
+20151203,  60,
+20151204,  30,
+20151205,  30,
+20151206,  55,
+20151207,  60,
+20151208,   0,
+20151209,  30,
+20151210,  30,
+20151211,  30,
+20151212,  30,
+20151213,  30,
+20151214,  30,
+20151215,  60,
+20151216,  30,
+20151217,  60,
+20151218,  60,
+20151219,   0,
+20151220,  62,
+20151221,  60,
+20151222,  60,
+20151223,  30,
+20151224,  30,
+20151225,  30,
+20151226,  30,
+20151227,  30,
+20151228,  30,
+20151229,  90,
+20151230,  90,
+20151230,  30,
+20151231,  30,
+20160101,  30,
+20160102,  60,
+20160103,  30,
+20160103,  60,
+20160104,  90,
+20160105,  90,
+20160106,  60,
+20160107,  80,
+20160108,  60,
+20160109,  90,
+20160110,  60,
+20160111,  60,
+20160112,  30,
+20160113,  30,
+20160114,  60,
+20160115,  30,
+20160116,  30,
+20160117,  30,
+20160118,  60,
+20160119,  60,
+20160120,  30,
+20160121,  30,
+20160122,  60,
+20160123,  60,
+20160124,  60,
+20160125,  60,
+20160126,  60,
+20160127,  60,
+20160128,  60,
+20160129,  90,
+20160130,  60,
+20160131,  30,
+20160201, 120,
+20160202, 150,
+20160203, 120,
+20160204, 150,
+20160205,  90,
+20160206, 155,
+20160207, 180,
+20160208, 180,
+20160209, 180,
+20160210, 180,
+20160211, 220,
+20160212, 240,
+20160213, 210,
+20160214, 210,
+20160215, 210,
+20160216, 210,
+20160217, 300,
+20160218,   0,
+20160219,   0,
+20160220,   0,
+20160221,   0,
+20160222,   0,
+20160223,   0,
+20160224,   0,
+20160225,   0,
+20160226,   0,
+20160227,   0,
+20160228,   0,
+20160229,   0),
+,ncol=2,byrow=TRUE)
+
+# Delete pdf file
+fn <- "gym.pdf"
+if (file.exists(fn)) file.remove(fn)
+
+dates <- as.Date(as.character(dat[,1]), "%Y%m%d")
+dat <- data.frame(dates,dat[,2])
+colnames(dat) <- c("dates", "pushups")
+
+# Setup plots
+# Define Matlab green color (0,0.5,0) where (normalized) color intensities 
+# are [0,1]. Value 0.5 corresponds to 2^8 when using 8 bits or x80:
+#   N   8   7  6  5  4 3 2 1 0
+# 2^N 256 128 64 32 16 8 4 2 1
+# bin   1   0  0  0  0 0 0 0 0
+# hex   80
+colStr=c("#008000")
+#colStr=c("green")
+#colStr=c("red")
+pchStr=c(1)
+ltyStr=c(1)
+mainStr=c("")
+typeStr=c("b")
+lwdStr=c(1)
+
+# Setup plot margins
+marBottom <- 0.4 # in
+marLeft <- 0.4
+marTop <- 0.1
+marRight <- 0.1
+par(mai=c(marBottom, marLeft, marTop, marRight), xpd=TRUE)
+# Plot and setup legends
+plot(dates,dat[,2],col=colStr,main=mainStr,xlab="",ylab="",type=typeStr,
+pch=pchStr,lty=ltyStr,lwd=lwdStr)
+#box("figure",lwd=2,lty=2) # To figure outer border
+grid()
+```
+
+**Figure `r paste(figr("eulfpet"), "", sep = ": ")`** *Pushups over time.*
+
+# Tables
+
+Montly number of pushups are visualized in Table `r figr("tab1",type="table")` below.
+
+```{r tab1, anchor="table",echo=FALSE}
+myMean <- function(x,doFloor=FALSE) {
+  if (sum(x) == 0) {
+    return(0)
+  }
+  if (doFloor) {
+    return(floor(sum(x) / length(which(x != 0))))
+  }
+  else {
+    return(sum(x) / length(which(x != 0)))
+  }
+}
+mySigma <- function(x,doFloor=FALSE) {
+  if (sum(x) == 0) {
+    return(0)
+  }
+  # Detect non-zero element indeces, idx and put
+  # them into new vector y
+  idx <- which(x != 0)
+  y <- NULL
+  for (k in idx) {
+    y <- c(y,x[k])
+    #print(k)
+  }
+  if (doFloor) {
+    return(floor(sd(y)))
+  }
+  else {
+    return(sd(y))
+  }
+}
+okt15 <- subset(dat, dates > "2015-10-01" & dates < "2015-10-31")
+okt15 <- c(format(okt15[1,1],"%Y"),format(okt15[1,1],"%b"),sum(okt15[,2]),myMean(okt15[,2],TRUE),mySigma(okt15[,2],TRUE))
+nov15 <- subset(dat, dates > "2015-11-01" & dates < "2015-11-30")
+nov15 <- c(format(nov15[1,1],"%Y"),format(nov15[1,1],"%b"),sum(nov15[,2]),myMean(nov15[,2],TRUE),mySigma(nov15[,2],TRUE))
+dec15 <- subset(dat, dates > "2015-12-01" & dates < "2015-12-31")
+dec15 <- c(format(dec15[1,1],"%Y"),format(dec15[1,1],"%b"),sum(dec15[,2]),myMean(dec15[,2],TRUE),mySigma(dec15[,2],TRUE))
+jan16 <- subset(dat, dates > "2016-01-01" & dates < "2016-01-31")
+jan16 <- c(format(jan16[1,1],"%Y"),format(jan16[1,1],"%b"),sum(jan16[,2]),myMean(jan16[,2],TRUE),mySigma(jan16[,2],TRUE))
+feb16 <- subset(dat, dates > "2016-02-01" & dates < "2016-02-29")
+feb16 <- c(format(feb16[1,1],"%Y"),format(feb16[1,1],"%b"),sum(feb16[,2]),myMean(feb16[,2],TRUE),mySigma(feb16[,2],TRUE))
+DF <- rbind(okt15,nov15,dec15,jan16,feb16)
+colnames(DF) <- c("Year", "Month","$\\Sigma$","$\\mu$","$\\sigma$")
+rownames(DF) <- NULL
+kable(DF)
+```
+
+**Table `r paste(figr("tab1",type="table"), "", sep = ": ")`** *Montly pushups starting from October 2015 and onwards.*
+
+Yearly number of pushups are visualized in Table `r figr("tab2",type="table")` below.
+
+```{r tab2, anchor="table",echo=FALSE}
+all15 <- subset(dat, dates > "2015-10-01" & dates < "2015-12-31")
+all15 <- c(format(all15[1,1],"%Y"),sum(all15[,2]),myMean(all15[,2],TRUE),mySigma(all15[,2],TRUE))
+all16 <- subset(dat, dates > "2016-01-01" & dates < "2016-02-29")
+all16 <- c(format(all16[1,1],"%Y"),sum(all16[,2]),myMean(all16[,2],TRUE),mySigma(all16[,2],TRUE))
+DFY <- rbind(all15,all16)
+colnames(DFY) <- c("Year","$\\Sigma$","$\\mu$","$\\sigma$")
+rownames(DFY) <- NULL
+kable(DFY, caption = "Title of the table", table.attr = "id=\"mytable\"")
+
+```
+
+**Table `r paste(figr("tab2",type="table"), "", sep = ": ")`** *Yearly pushups starting from 2015 and onwards.*
