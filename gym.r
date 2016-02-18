@@ -1,10 +1,9 @@
 # Set working directory
-setwd("~/R")
+setwd("~/Gym")
 
 # Load packages
 require(knitr)
-#require(kfigr)
-#require(markdown)
+
 # Create .md, .html, and .pdf files
 knit("gym.rmd")
 

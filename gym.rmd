@@ -270,15 +270,20 @@ mySigma <- function(x,doFloor=FALSE) {
   }
 }
 okt15 <- subset(dat, dates > "2015-10-01" & dates < "2015-10-31")
-okt15 <- c(format(okt15[1,1],"%Y"),format(okt15[1,1],"%b"),sum(okt15[,2]),myMean(okt15[,2],TRUE),mySigma(okt15[,2],TRUE))
+okt15 <- c(format(okt15[1,1],"%Y"),format(okt15[1,1],"%b"),sum(okt15[,2]),
+myMean(okt15[,2],TRUE),mySigma(okt15[,2],TRUE))
 nov15 <- subset(dat, dates > "2015-11-01" & dates < "2015-11-30")
-nov15 <- c(format(nov15[1,1],"%Y"),format(nov15[1,1],"%b"),sum(nov15[,2]),myMean(nov15[,2],TRUE),mySigma(nov15[,2],TRUE))
+nov15 <- c(format(nov15[1,1],"%Y"),format(nov15[1,1],"%b"),sum(nov15[,2]),
+myMean(nov15[,2],TRUE),mySigma(nov15[,2],TRUE))
 dec15 <- subset(dat, dates > "2015-12-01" & dates < "2015-12-31")
-dec15 <- c(format(dec15[1,1],"%Y"),format(dec15[1,1],"%b"),sum(dec15[,2]),myMean(dec15[,2],TRUE),mySigma(dec15[,2],TRUE))
+dec15 <- c(format(dec15[1,1],"%Y"),format(dec15[1,1],"%b"),sum(dec15[,2]),
+myMean(dec15[,2],TRUE),mySigma(dec15[,2],TRUE))
 jan16 <- subset(dat, dates > "2016-01-01" & dates < "2016-01-31")
-jan16 <- c(format(jan16[1,1],"%Y"),format(jan16[1,1],"%b"),sum(jan16[,2]),myMean(jan16[,2],TRUE),mySigma(jan16[,2],TRUE))
+jan16 <- c(format(jan16[1,1],"%Y"),format(jan16[1,1],"%b"),sum(jan16[,2]),
+myMean(jan16[,2],TRUE),mySigma(jan16[,2],TRUE))
 feb16 <- subset(dat, dates > "2016-02-01" & dates < "2016-02-29")
-feb16 <- c(format(feb16[1,1],"%Y"),format(feb16[1,1],"%b"),sum(feb16[,2]),myMean(feb16[,2],TRUE),mySigma(feb16[,2],TRUE))
+feb16 <- c(format(feb16[1,1],"%Y"),format(feb16[1,1],"%b"),sum(feb16[,2]),
+myMean(feb16[,2],TRUE),mySigma(feb16[,2],TRUE))
 DF <- rbind(okt15,nov15,dec15,jan16,feb16)
 colnames(DF) <- c("Year", "Month","$\\Sigma$","$\\mu$","$\\sigma$")
 rownames(DF) <- NULL
@@ -291,9 +296,11 @@ Yearly number of pushups are visualized in Table `r figr("tab2",type="table")` b
 
 ```{r tab2, anchor="table",echo=FALSE}
 all15 <- subset(dat, dates > "2015-10-01" & dates < "2015-12-31")
-all15 <- c(format(all15[1,1],"%Y"),sum(all15[,2]),myMean(all15[,2],TRUE),mySigma(all15[,2],TRUE))
+all15 <- c(format(all15[1,1],"%Y"),sum(all15[,2]),myMean(all15[,2],TRUE),
+mySigma(all15[,2],TRUE))
 all16 <- subset(dat, dates > "2016-01-01" & dates < "2016-02-29")
-all16 <- c(format(all16[1,1],"%Y"),sum(all16[,2]),myMean(all16[,2],TRUE),mySigma(all16[,2],TRUE))
+all16 <- c(format(all16[1,1],"%Y"),sum(all16[,2]),myMean(all16[,2],TRUE),
+mySigma(all16[,2],TRUE))
 DFY <- rbind(all15,all16)
 colnames(DFY) <- c("Year","$\\Sigma$","$\\mu$","$\\sigma$")
 rownames(DFY) <- NULL
