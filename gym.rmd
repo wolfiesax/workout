@@ -183,7 +183,7 @@ dat = matrix(c(
 20160217, 300,
 20160218, 300,
 20160219, 300,
-20160220,  90,
+20160220, 120,
 20160221,   0,
 20160222,   0,
 20160223,   0,
@@ -314,12 +314,12 @@ Total number of pushups are visualized in Table `r figr("tab3",type="table")` be
 
 ```{r tab3, anchor="table",echo=FALSE}
 all1516 <- subset(dat, dates > "2015-10-01" & dates < "2016-02-29")
-all1516 <- c(sum(all1516[,2]),myMean(all1516[,2],TRUE),
-mySigma(all1516[,2],TRUE))
+all1516 <- c(sum(all1516[,2]),myMean(all1516[,2],TRUE),mySigma(all1516[,2],TRUE))
+all1516 <- rbind(all1516)
 colnames(all1516) <- c("$\\Sigma$","$\\mu$","$\\sigma$")
 rownames(all1516) <- NULL
 kable(all1516)
 
 ```
 
-**Table `r paste(figr("tab3",type="table"), "", sep = ": ")`** *Total number of pushups starting from 2015 and onwards.*
+**Table `r paste(figr("tab3",type="table"), "", sep = ": ")`** *Total number of pushups starting from October 2015 and onwards.*
