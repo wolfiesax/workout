@@ -1,6 +1,6 @@
 ---
 title: Workout statistics
-date: 2016-02-19
+date: 2016-02-20
 toc: true
 author: Ulf Saxin
 subtitle: Subtitle
@@ -10,7 +10,7 @@ docprep: EULFPET Ulf Saxin
 docresp: EULFPET Ulf Saxin
 docno: TBD Uen
 docchk: EULFPET
-docrev: PA3
+docrev: PA1
 ---
 
 ```{r setup, echo=FALSE, message=FALSE, results="hide"}
@@ -183,7 +183,7 @@ dat = matrix(c(
 20160217, 300,
 20160218, 300,
 20160219, 300,
-20160220,   0,
+20160220,  90,
 20160221,   0,
 20160222,   0,
 20160223,   0,
@@ -210,9 +210,9 @@ colnames(dat) <- c("dates", "pushups")
 # 2^N 256 128 64 32 16 8 4 2 1
 # bin   1   0  0  0  0 0 0 0 0
 # hex   80
-colStr=c("#008000")
+#colStr=c("#008000")
 #colStr=c("green")
-#colStr=c("red")
+colStr=c("red")
 pchStr=c(1)
 ltyStr=c(1)
 mainStr=c("")
@@ -309,3 +309,17 @@ kable(DFY, caption = "Title of the table", table.attr = "id=\"mytable\"")
 ```
 
 **Table `r paste(figr("tab2",type="table"), "", sep = ": ")`** *Yearly pushups starting from 2015 and onwards.*
+
+Total number of pushups are visualized in Table `r figr("tab3",type="table")` below.
+
+```{r tab3, anchor="table",echo=FALSE}
+all1516 <- subset(dat, dates > "2015-10-01" & dates < "2016-02-29")
+all1516 <- c(sum(all1516[,2]),myMean(all1516[,2],TRUE),
+mySigma(all1516[,2],TRUE))
+colnames(all1516) <- c("$\\Sigma$","$\\mu$","$\\sigma$")
+rownames(all1516) <- NULL
+kable(all1516)
+
+```
+
+**Table `r paste(figr("tab3",type="table"), "", sep = ": ")`** *Total number of pushups starting from 2015 and onwards.*
