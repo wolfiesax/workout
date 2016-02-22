@@ -1,6 +1,6 @@
 ---
 title: Workout statistics
-date: 2016-02-21
+date: 2016-02-22
 toc: true
 author: Ulf Saxin
 subtitle: Subtitle
@@ -185,7 +185,7 @@ dat = matrix(c(
 20160219, 300,
 20160220, 180,
 20160221, 360,
-20160222,   0,
+20160222,  30,
 20160223,   0,
 20160224,   0,
 20160225,   0,
