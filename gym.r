@@ -1,5 +1,5 @@
 # Set working directory
-setwd("~/gym")
+setwd("~/workout")
 
 # Load packages
 require(knitr)
