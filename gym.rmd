@@ -1,6 +1,6 @@
 ---
 title: Workout statistics
-date: 2016-03-07
+date: 2016-03-10
 toc: true
 author: Ulf Saxin
 subtitle: Subtitle
@@ -199,7 +199,10 @@ dat = matrix(c(
 20160304,  30,
 20160305,  30,
 20160306,  30,
-20160307,  30),
+20160307,  30,
+20160308,  30,
+20160309,  30,
+20160310,  30),
 ,ncol=2,byrow=TRUE)
 
 # Delete pdf file
